@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte Urbano: Resistencia e Identidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #003366;
+            --medium-blue: #0066cc;
+            --light-blue: #4da6ff;
+            --dark-green: #006600;
+            --medium-green: #009933;
+            --light-green: #00cc66;
+            --dark-gray: #333333;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --accent: #ff9900;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e6f2ff 0%, #d9f2e6 100%);
+            color: var(--dark-gray);
+            line-height: 1.7;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+        
+        /* Cabecera con efecto de movimiento */
+        header {
+            background: linear-gradient(120deg, var(--dark-blue), var(--dark-green));
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            animation: titleFloat 6s infinite ease-in-out;
+        }
+        
+        .header-content p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            animation: fadeIn 2s ease;
+        }
+        
+        .project-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-8px) rotate(2deg);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Barra de navegación con efecto 3D */
+        nav {
+            background: linear-gradient(to right, var(--dark-blue), var(--dark-green));
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            transform: perspective(500px) rotateX(2deg);
+            transform-origin: top;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 20px 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Secciones principales con efecto parallax */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--dark-blue);
+            display: inline-block;
+            padding: 0 30px 20px;
+            position: relative;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 6px;
+            background: linear-gradient(to right, var(--dark-blue), var(--dark-green));
+            border-radius: 10px;
+        }
+        
+        .section-title p {
+            font-size: 1.3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--dark-gray);
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            padding: 3rem;
+            margin-bottom: 4rem;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--dark-blue), var(--dark-green));
+        }
+        
+        .content-card:hover {
+            transform: translateY(-15px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .content-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--medium-green);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .content-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        p::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--medium-green);
+            font-size: 1.5rem;
+        }
+        
+        /* Galería con efecto 3D */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 40px;
+            margin: 4rem 0;
+            perspective: 1000px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-20px) rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+        }
+        
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .gallery-item:hover img, .gallery-item:hover video {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--white);
+            padding: 25px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery-caption h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        /* Referencias Bibliográficas */
+        .references {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .references h3 {
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--medium-green);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .references h3::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .references ul {
+            list-style-type: none;
+        }
+        
+        .references li {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .references li::before {
+            content: '📚';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+        }
+        
+        /* Pantalla completa */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .fullscreen-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .fullscreen-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .fullscreen-content img, .fullscreen-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            border: 3px solid var(--accent);
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 153, 0, 0.3);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: var(--white);
+            font-size: 3rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-btn:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+        
+        /* Pie de página */
+        footer {
+            background: linear-gradient(to right, var(--dark-blue), var(--dark-green));
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-content p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: var(--white);
+            padding-left: 0;
+        }
+        
+        .footer-content p::before {
+            content: none;
+        }
+        
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotate(0.5deg); }
+            50% { transform: translateY(-15px) rotate(-0.5deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .content-card {
+                padding: 2rem;
+            }
+        }
+        
+        /* Efectos especiales */
+        .floating {
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            25% { transform: translateY(-20px) rotate(2deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+            75% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        .pulse {
+            animation: pulse 3s infinite ease-in-out;
+        }
+        
+        /* Decoraciones */
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--medium-blue);
+            top: 20%;
+            right: 10%;
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        .square {
+            width: 150px;
+            height: 150px;
+            background: var(--medium-green);
+            bottom: 30%;
+            left: 5%;
+            transform: rotate(45deg);
+            animation: pulse 5s infinite ease-in-out;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 173px solid var(--accent);
+            top: 40%;
+            left: 20%;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        .image-comparison {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            margin: 4rem 0;
+        }
+        
+        .image-comparison img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-comparison .before {
+            width: 50%;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .image-comparison .slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: white;
+            z-index: 3;
+            cursor: col-resize;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .image-comparison .slider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabecera con animación -->
+    <header>
+        <div class="decoration circle"></div>
+        <div class="decoration square"></div>
+        <div class="decoration triangle"></div>
+        
+        <div class="header-content">
+            <h1 class="pulse">EL ARTE URBANO ES REFLEJO DE RESISTENCIA</h1>
+            <p>Y CONSTRUCCIÓN DE IDENTIDAD PARA LAS COMUNIDADES</p>
+            <div class="project-info">
+                <div class="info-card floating">
+                    <i class="fas fa-chalkboard-teacher"></i> Docente: Isabel del Carmen Collazos Ticona
+                </div>
+                <div class="info-card floating" style="animation-delay: 0.3s;">
+                    <i class="fas fa-book"></i> Curso: Arte y Tecnología
+                </div>
+                <div class="info-card floating" style="animation-delay: 0.6s;">
+                    <i class="fas fa-users"></i> Grupo 6
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Barra de navegación -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#introduccion">Introducción</a>
+                <a href="#mensaje">Mensaje Central</a>
+                <a href="#justificacion">Justificación</a>
+                <a href="#materialidad">Materialidad</a>
+                <a href="#exhibicion">Exhibición</a>
+                <a href="#referencias">Referencias</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Sección de Introducción -->
+    <section id="introduccion">
+        <div class="section-title">
+            <h2>Introducción</h2>
+            <p>El arte urbano como expresión cultural y resistencia social</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>El poder del arte en la calle</h3>
+            <p>El arte urbano ha emergido como una forma poderosa de expresión cultural que trasciende las galerías tradicionales para apropiarse del espacio público. Este informe explora cómo el arte callejero se ha convertido en un vehículo de resistencia cultural y construcción de identidad para comunidades marginadas.</p>
+            
+            <p>A través de murales, grafitis, instalaciones y otras intervenciones artísticas, los creadores urbanos desafían narrativas dominantes, reivindican espacios públicos y fortalecen el tejido social de sus comunidades.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="1.jpg" alt="Arte urbano en comunidad">
+                    <div class="gallery-caption">
+                        <h4>Mural Comunitario</h4>
+                        <p>Expresión colectiva en espacio público</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="2.jpg" alt="Técnicas de arte urbano">
+                    <div class="gallery-caption">
+                        <h4>Diversidad de Técnicas</h4>
+                        <p>Stencil, aerosol y más</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>El arte urbano transforma espacios olvidados en galerías al aire libre, dando voz a quienes han sido históricamente silenciados. Esta forma de expresión democratiza el acceso al arte y crea diálogos en espacios donde tradicionalmente no existían.</p>
+        </div>
+    </section>
+    
+    <!-- Sección de Mensaje Central -->
+    <section id="mensaje">
+        <div class="section-title">
+            <h2>Mensaje Central</h2>
+            <p>El arte urbano como herramienta de resistencia y construcción identitaria</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>Resistencia a través del color</h3>
+            <p>El arte urbano emerge como una poderosa herramienta de resistencia cultural y construcción de identidad en las comunidades. A través de intervenciones artísticas en espacios públicos, se busca transformar la percepción de la ciudad, reivindicar la memoria colectiva y fortalecer el sentido de pertenencia de los habitantes.</p>
+            
+            <p>Estas manifestaciones artísticas no solo embellecen el entorno urbano, sino que también sirven como espejo de las luchas, sueños y aspiraciones de quienes habitan estos espacios. El arte urbano democratiza el acceso al arte, llevándolo fuera de las instituciones tradicionales y devolviéndolo a las calles donde nace la verdadera expresión popular.</p>
+            
+            <p>Este arte ayuda a reivindicar nuestra memoria colectiva y fortalece el sentido de pertenencia de quienes viven allí, creando un lazo cultural que va más allá de los muros y las calles.</p>
+        </div>
+    </section>
+    
+    <!-- Sección de Justificación -->
+    <section id="justificacion">
+        <div class="section-title">
+            <h2>Justificación</h2>
+            <p>Fundamentos teóricos del arte urbano como resistencia</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>Marco teórico del arte callejero</h3>
+            <p>El sociólogo Pierre Bourdieu, en su teoría de los campos, sugiere que el arte urbano puede ser visto como un "campo" alternativo donde se negocian significados y se desafían las estructuras de poder establecidas. Esta perspectiva permite entender el arte urbano como una práctica que, aunque inicialmente marginal, puede ganar legitimidad y convertirse en un medio de transformación social.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="3.jpg" alt="Espacio urbano deteriorado">
+                    <div class="gallery-caption">
+                        <h4>Espacio Abandonado</h4>
+                        <p>Antes de la intervención artística</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>Además, estudios sobre la memoria colectiva, como los de Maurice Halbwachs, indican que el arte urbano puede contribuir a la construcción de una memoria compartida, vinculando a las comunidades con su historia y fortaleciendo su identidad colectiva.</p>
+            
+            <p>El arte urbano en Lima ha evolucionado significativamente, pasando de ser asociado con pandillas y vandalismo a convertirse en una herramienta de transformación social y cultural. Artistas como Edwin Higuchi, conocido como 'Pésimo', han sido pioneros en este cambio, utilizando el graffiti como medio de expresión estética y crítica social.</p>
+        </div>
+    </section>
+    
+    <!-- Sección de Materialidad -->
+    <section id="materialidad">
+        <div class="section-title">
+            <h2>Materialidad</h2>
+            <p>Justificación del medio artístico escogido</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>Medios y técnicas del arte urbano</h3>
+            <p>El muralismo urbano fue la base de la obra, complementada por un collage digital generado por IA para mostrar el contraste entre espacios deteriorados y su transformación a través del arte urbano.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="4.jpg" alt="Collage digital">
+                    <div class="gallery-caption">
+                        <h4>Collage digital</h4>
+                        <p>Creado con IA para visualizar la transformación</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="5.jpg" alt="Dibujo digital">
+                    <div class="gallery-caption">
+                        <h4>Dibujo realizado con herramientas digitales</h4>
+                        <p>Creación propia</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>La materialidad del arte urbano también tiene un componente político: el uso de técnicas accesibles y materiales económicos democratiza la producción artística, permitiendo que personas sin formación académica en arte puedan expresarse y participar en la transformación visual de su entorno.</p>
+            
+            <p>El arte urbano se muestra como herramienta de transformación, revitalizando espacios y comunidades a través de la renovación visual de entornos urbanos.</p>
+        </div>
+    </section>
+    
+    <!-- Sección de Exhibición -->
+    <section id="exhibicion">
+        <div class="section-title">
+            <h2>Exhibición</h2>
+            <p>Fotografía y video de la obra en exhibición</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>Contraste: Arte urbano y espacios deteriorados</h3>
+            <p>Nuestra propuesta artística contrasta la vitalidad del arte urbano con la decadencia de espacios urbanos deteriorados, creando un diálogo visual entre la creatividad humana y el abandono institucional.</p>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="1.jpg" alt="Espacio urbano antes">
+                    <div class="gallery-caption">
+                        <h4>Antes de la intervención</h4>
+                        <p>Espacio urbano deteriorado</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="2.jpg" alt="Espacio urbano después">
+                    <div class="gallery-caption">
+                        <h4>Después de la intervención</h4>
+                        <p>Transformación a través del arte urbano</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <video controls>
+                        <source src="dos.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                    <div class="gallery-caption">
+                        <h4>Proceso Creativo</h4>
+                        <p>Video documental de la creación del mural</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p>Es esta transformación lo que buscamos mostrar con nuestro trabajo: cómo el arte urbano no solo embellece, sino que cambia vidas y reconstruye identidades.</p>
+        </div>
+    </section>
+    
+    <!-- Sección de Referencias Bibliográficas -->
+    <section id="referencias">
+        <div class="section-title">
+            <h2>Referencias Bibliográficas</h2>
+            <p>Fuentes académicas que sustentan nuestra investigación</p>
+        </div>
+        
+        <div class="references">
+            <h3>Bibliografía</h3>
+            <ul>
+                <li>Gonzales, M. A. (2024, octubre 20). <em>En Lima y Callao, 94% de ciudadanos se sienten inseguro en las calles</em>. Infobae.</li>
+                <li>González, M.A. (2024). <em>La transformación del arte urbano en el Perú bajo la mirada de Pésimo</em>. Gestión.</li>
+                <li>Bourdieu, P. (1993). <em>La distinción: Criterio y bases sociales del juicio</em> (2.ª ed.). Ediciones Siglo XXI.</li>
+                <li>Halbwachs, M. (1992). <em>La memoria colectiva</em>. Editorial Trotta.</li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- Pantalla completa para imágenes/videos -->
+    <div class="fullscreen-overlay">
+        <button class="close-btn">&times;</button>
+        <div class="fullscreen-content">
+            <img class="fullscreen-image" src="" alt="Imagen a pantalla completa">
+            <video class="fullscreen-video" controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ARTE URBANO</div>
+            <p>Resistencia e Identidad Comunitaria</p>
+            <p>Proyecto desarrollado para el curso de Arte y Tecnología</p>
+            <p>© 2023 - Grupo 6 - Todos los derechos reservados</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Abrir imágenes/videos en pantalla completa
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const fullscreenOverlay = document.querySelector('.fullscreen-overlay');
+            const fullscreenImage = document.querySelector('.fullscreen-image');
+            const fullscreenVideo = document.querySelector('.fullscreen-video');
+            const closeBtn = document.querySelector('.close-btn');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    const video = this.querySelector('video');
+                    
+                    if (img) {
+                        fullscreenImage.src = img.src;
+                        fullscreenImage.style.display = 'block';
+                        fullscreenVideo.style.display = 'none';
+                        fullscreenOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    } else if (video) {
+                        fullscreenVideo.src = video.querySelector('source').src;
+                        fullscreenImage.style.display = 'none';
+                        fullscreenVideo.style.display = 'block';
+                        fullscreenOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        fullscreenVideo.play();
+                    }
+                });
+            });
+            
+            // Cerrar pantalla completa
+            closeBtn.addEventListener('click', function() {
+                fullscreenOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                if (fullscreenVideo) fullscreenVideo.pause();
+            });
+            
+            // Animación de secciones al hacer scroll
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(50px)';
+                section.style.transition = 'opacity 1s ease, transform 1s ease';
+                observer.observe(section);
+            });
+            
+            // Navegación suave
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
